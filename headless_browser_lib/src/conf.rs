@@ -1,7 +1,7 @@
 use std::sync::atomic::{AtomicBool, AtomicU64};
 
 /// The performance arg count.
-pub(crate) const PERF_ARGS: usize = 95;
+pub(crate) const PERF_ARGS: usize = 94;
 
 lazy_static::lazy_static! {
     /// The chrome args to use test ( basic without anything used for testing ).
@@ -113,21 +113,10 @@ lazy_static::lazy_static! {
         .nth(6)
         .unwrap_or("true".into());
 
-        let headless = if headless != "false" {
-            match std::env::var("HEADLESS") {
-                Ok(h) => {
-                    if h == "false" {
-                        ""
-                    } else if h == "new" {
-                        "--headless=new"
-                    }else {
-                        "--headless"
-                    }
-                }
-                _ => "--headless"
-            }
-        } else {
-            ""
+        let headless = match (headless != "false", std::env::var("HEADLESS").as_deref()) {
+            (false, _) | (true, Ok("false")) => "",
+            (_, Ok("new")) => "--headless=new",
+            _ => "--headless",
         };
 
         let port = if DEFAULT_PORT.eq(&9223) {
@@ -180,7 +169,7 @@ lazy_static::lazy_static! {
             "--disable-dinosaur-easter-egg",
             "--disable-fetching-hints-at-navigation-start",
             "--disable-site-isolation-trials",
-            "--disable-web-security",
+            // "--disable-web-security",
             "--disable-threaded-animation",
             "--disable-sync",
             "--disable-print-preview",

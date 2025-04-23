@@ -657,7 +657,7 @@ dependencies = [
 
 [[package]]
 name = "headless_browser"
-version = "0.1.12"
+version = "0.1.13"
 dependencies = [
  "futures-util",
  "headless_browser_lib",
@@ -670,7 +670,7 @@ dependencies = [
 
 [[package]]
 name = "headless_browser_lib"
-version = "0.1.12"
+version = "0.1.13"
 dependencies = [
  "cached",
  "dashmap",
