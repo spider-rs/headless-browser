@@ -1,7 +1,7 @@
 use std::sync::atomic::{AtomicBool, AtomicU64};
 
 /// The performance arg count.
-pub(crate) const PERF_ARGS: usize = 94;
+pub(crate) const PERF_ARGS: usize = 92;
 
 lazy_static::lazy_static! {
     /// The chrome args to use test ( basic without anything used for testing ).
@@ -126,22 +126,20 @@ lazy_static::lazy_static! {
         } else {
             "--remote-debugging-port=9222"
         };
-
-        let use_gl = match std::env::var("CHROME_GL") {
-            Ok(h) => {
-                if h == "angle" {
-                    "--use-gl=angle"
-                } else {
-                    "--use-gl=swiftshader"
-                }
-            }
-            _ => "--use-gl=angle"
-        };
-
         let gpu = std::env::var("ENABLE_GPU").unwrap_or_default() == "true";
-
         let gpu_enabled = if gpu { "--enable-gpu" } else { "--disable-gpu" };
         let gpu_enabled_sandboxed = if gpu { "--enable-gpu-sandbox" } else { "--disable-gpu-sandbox" };
+
+        // let use_gl = match std::env::var("CHROME_GL") {
+        //     Ok(h) => {
+        //         if h == "angle" {
+        //             "--use-gl=angle"
+        //         } else {
+        //             "--use-gl=swiftshader"
+        //         }
+        //     }
+        //     _ => "--use-gl=angle"
+        // };
 
         [
             // *SPECIAL*
@@ -151,7 +149,9 @@ lazy_static::lazy_static! {
             headless,
             gpu_enabled,
             gpu_enabled_sandboxed,
-            use_gl,
+            "--enable-webgl",
+            // use_gl,
+            // "--use-angle=swiftshader",
             "--no-first-run",
             "--no-sandbox",
             "--disable-setuid-sandbox",
@@ -174,9 +174,8 @@ lazy_static::lazy_static! {
             "--disable-sync",
             "--disable-print-preview",
             "--disable-search-engine-choice-screen",
-            "--disable-partial-raster",
+            // "--disable-partial-raster",
             "--disable-in-process-stack-traces",
-            "--use-angle=swiftshader",
             "--disable-low-res-tiling",
             "--disable-speech-api",
             "--disable-oobe-chromevox-hint-timer-for-testing",
@@ -216,7 +215,7 @@ lazy_static::lazy_static! {
             "--disable-libassistant-logfile",
             "--ip-protection-proxy-opt-out",
             "--unsafely-disable-devtools-self-xss-warning",
-            "--enable-features=PdfOopif,SharedArrayBuffer,NetworkService,NetworkServiceInProcess",
+            "--enable-features=Vulkan,PdfOopif,SharedArrayBuffer,NetworkService,NetworkServiceInProcess",
             "--metrics-recording-only",
             "--use-mock-keychain",
             "--force-color-profile=srgb",
@@ -242,7 +241,7 @@ lazy_static::lazy_static! {
             "--disable-ipc-flooding-protection", // we do not need to throttle navigation for https://github.com/spider-rs/spider/commit/9ff5bbd7a2656b8edb84b62843b72ae9d09af079#diff-75ce697faf0d37c3dff4a3a19e7524798b3cb5487f8f54beb5d04c4d48e34234R446.
             // --deterministic-mode 10-20% drop in perf
             // "--blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4",
-            "--disable-features=PaintHolding,HttpsUpgrades,DeferRendererTasksAfterInput,LensOverlay,ThirdPartyStoragePartitioning,IsolateSandboxedIframes,ProcessPerSiteUpToMainFrameThreshold,site-per-process,WebUIJSErrorReportingExtended,DIPS,InterestFeedContentSuggestions,PrivacySandboxSettings4,AutofillServerCommunication,CalculateNativeWinOcclusion,OptimizationHints,AudioServiceOutOfProcess,IsolateOrigins,ImprovedCookieControls,LazyFrameLoading,GlobalMediaControls,DestroyProfileOnBrowserClose,MediaRouter,DialMediaRouteProvider,AcceptCHFrame,AutoExpandDetailsElement,CertificateTransparencyComponentUpdater,AvoidUnnecessaryBeforeUnloadCheckSync,Translate",
+            "--disable-features=PaintHolding,HttpsUpgrades,DeferRendererTasksAfterInput,LensOverlay,ThirdPartyStoragePartitioning,IsolateSandboxedIframes,ProcessPerSiteUpToMainFrameThreshold,site-per-process,WebUIJSErrorReportingExtended,DIPS,InterestFeedContentSuggestions,PrivacySandboxSettings4,AutofillServerCommunication,CalculateNativeWinOcclusion,OptimizationHints,AudioServiceOutOfProcess,IsolateOrigins,ImprovedCookieControls,LazyFrameLoading,GlobalMediaControls,DestroyProfileOnBrowserClose,MediaRouter,DialMediaRouteProvider,AcceptCHFrame,AutoExpandDetailsElement,CertificateTransparencyComponentUpdater,AvoidUnnecessaryBeforeUnloadCheckSync,Translate"
         ]
     };
 
