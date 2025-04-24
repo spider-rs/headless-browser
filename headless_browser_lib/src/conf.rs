@@ -1,7 +1,7 @@
 use std::sync::atomic::{AtomicBool, AtomicU64};
 
 /// The performance arg count.
-pub(crate) const PERF_ARGS: usize = 92;
+pub(crate) const PERF_ARGS: usize = 91;
 
 lazy_static::lazy_static! {
     /// The chrome args to use test ( basic without anything used for testing ).
@@ -177,7 +177,6 @@ lazy_static::lazy_static! {
             // "--disable-partial-raster",
             "--disable-in-process-stack-traces",
             "--disable-low-res-tiling",
-            "--disable-speech-api",
             "--disable-oobe-chromevox-hint-timer-for-testing",
             "--disable-smooth-scrolling",
             "--disable-prompt-on-repost",
