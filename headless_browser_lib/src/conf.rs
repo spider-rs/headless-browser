@@ -1,7 +1,7 @@
 use std::sync::atomic::{AtomicBool, AtomicU64};
 
 /// The performance arg count.
-pub(crate) const PERF_ARGS: usize = 91;
+pub(crate) const PERF_ARGS: usize = 94;
 
 lazy_static::lazy_static! {
     /// The chrome args to use test ( basic without anything used for testing ).
@@ -150,6 +150,9 @@ lazy_static::lazy_static! {
             gpu_enabled,
             gpu_enabled_sandboxed,
             "--enable-webgl",
+            "--enable-webgl2-compute-context",
+            "--enable-webgl-draft-extensions",
+            "--enable-unsafe-webgpu",
             // use_gl,
             // "--use-angle=swiftshader",
             "--no-first-run",
@@ -186,7 +189,6 @@ lazy_static::lazy_static! {
             "--disable-background-timer-throttling",
             "--disable-breakpad",
             "--disable-crash-reporter",
-            "--disable-software-rasterizer",
             "--disable-asynchronous-spellchecking",
             "--disable-html5-camera",
             "--noerrdialogs",
@@ -240,7 +242,12 @@ lazy_static::lazy_static! {
             "--disable-ipc-flooding-protection", // we do not need to throttle navigation for https://github.com/spider-rs/spider/commit/9ff5bbd7a2656b8edb84b62843b72ae9d09af079#diff-75ce697faf0d37c3dff4a3a19e7524798b3cb5487f8f54beb5d04c4d48e34234R446.
             // --deterministic-mode 10-20% drop in perf
             // "--blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4",
-            "--disable-features=PaintHolding,HttpsUpgrades,DeferRendererTasksAfterInput,LensOverlay,ThirdPartyStoragePartitioning,IsolateSandboxedIframes,ProcessPerSiteUpToMainFrameThreshold,site-per-process,WebUIJSErrorReportingExtended,DIPS,InterestFeedContentSuggestions,PrivacySandboxSettings4,AutofillServerCommunication,CalculateNativeWinOcclusion,OptimizationHints,AudioServiceOutOfProcess,IsolateOrigins,ImprovedCookieControls,LazyFrameLoading,GlobalMediaControls,DestroyProfileOnBrowserClose,MediaRouter,DialMediaRouteProvider,AcceptCHFrame,AutoExpandDetailsElement,CertificateTransparencyComponentUpdater,AvoidUnnecessaryBeforeUnloadCheckSync,Translate"
+            "--disable-features=PaintHolding,HttpsUpgrades,DeferRendererTasksAfterInput,LensOverlay,ThirdPartyStoragePartitioning,IsolateSandboxedIframes,ProcessPerSiteUpToMainFrameThreshold,site-per-process,WebUIJSErrorReportingExtended,DIPS,InterestFeedContentSuggestions,PrivacySandboxSettings4,AutofillServerCommunication,CalculateNativeWinOcclusion,OptimizationHints,AudioServiceOutOfProcess,IsolateOrigins,ImprovedCookieControls,LazyFrameLoading,GlobalMediaControls,DestroyProfileOnBrowserClose,MediaRouter,DialMediaRouteProvider,AcceptCHFrame,AutoExpandDetailsElement,CertificateTransparencyComponentUpdater,AvoidUnnecessaryBeforeUnloadCheckSync,Translate",
+            if !gpu {
+                "--enable-unsafe-swiftshader"
+            } else {
+                ""
+            }
         ]
     };
 

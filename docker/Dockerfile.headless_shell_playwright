@@ -71,5 +71,6 @@ ENV LAUNCH=init
 ENV DEFAULT_PORT=9223
 ENV DEFAULT_PORT_SERVER=6000
 ENV DEFAULT_LAUNCH_NAME=/out/latest/headless-shell/headless-shell
+# ENV HOSTNAME_OVERRIDE=127.0.0.1
 
 ENTRYPOINT ["tini", "--", "/docker-entrypoint.sh"]
