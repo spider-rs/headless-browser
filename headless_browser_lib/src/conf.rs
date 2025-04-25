@@ -138,8 +138,9 @@ lazy_static::lazy_static! {
                     "--use-gl=swiftshader"
                 }
             }
-            _ => "--use-gl=angle"
+            _ => "--use-gl=swiftshader"
         };
+
 
         [
             // *SPECIAL*
@@ -241,11 +242,8 @@ lazy_static::lazy_static! {
             // "--blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4",
             "--disable-features=PaintHolding,HttpsUpgrades,DeferRendererTasksAfterInput,LensOverlay,ThirdPartyStoragePartitioning,IsolateSandboxedIframes,ProcessPerSiteUpToMainFrameThreshold,site-per-process,WebUIJSErrorReportingExtended,DIPS,InterestFeedContentSuggestions,PrivacySandboxSettings4,AutofillServerCommunication,CalculateNativeWinOcclusion,OptimizationHints,AudioServiceOutOfProcess,IsolateOrigins,ImprovedCookieControls,LazyFrameLoading,GlobalMediaControls,DestroyProfileOnBrowserClose,MediaRouter,DialMediaRouteProvider,AcceptCHFrame,AutoExpandDetailsElement,CertificateTransparencyComponentUpdater,AvoidUnnecessaryBeforeUnloadCheckSync,Translate",
             // put these args on the same command for now to prevent empty args cross-platform execution. The args will be one less on gpu enabled builds.
-            if gpu {
-                "--enable-unsafe-swiftshader --use-angle=swiftshader"
-            } else {
-                ""
-            },
+            // "--enable-unsafe-swiftshader",
+            "--use-angle=swiftshader"
         ]
     };
 
