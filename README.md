@@ -182,6 +182,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 View the [benches](./benches/README.md) to see the performance between browsers for headless.
 
+## Flags
+
+Use the flag `physical_gpu` to enable physical gpu rendering.
+
 ## License
 
 MIT

@@ -1,6 +1,6 @@
 [package]
 name = "headless_browser"
-version = "0.1.20"
+version = "0.1.21"
 edition = "2021"
 authors = [
     "j-mendez <jeff@spider.cloud>"
@@ -30,3 +30,4 @@ tokio = { version = "1", features = ["rt-multi-thread", "signal", "macros", "net
 [features]
 default = ["jemalloc"]
 jemalloc = ["dep:tikv-jemallocator"]
+physical_gpu = ["headless_browser_lib/physical_gpu"]

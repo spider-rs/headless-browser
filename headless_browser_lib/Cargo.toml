@@ -1,6 +1,6 @@
 [package]
 name = "headless_browser_lib"
-version = "0.1.20"
+version = "0.1.21"
 edition = "2021"
 authors = [
     "j-mendez <jeff@spider.cloud>"
@@ -29,3 +29,4 @@ dashmap = "6"
 
 [features]
 testing = []
+physical_gpu = []
