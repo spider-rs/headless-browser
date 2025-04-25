@@ -1,7 +1,7 @@
 use std::sync::atomic::{AtomicBool, AtomicU64};
 
 /// The performance arg count.
-pub(crate) const PERF_ARGS: usize = 94;
+pub(crate) const PERF_ARGS: usize = 95;
 
 lazy_static::lazy_static! {
     /// The chrome args to use test ( basic without anything used for testing ).
@@ -114,7 +114,7 @@ lazy_static::lazy_static! {
         .unwrap_or("true".into());
 
         let headless = match (headless != "false", std::env::var("HEADLESS").as_deref()) {
-            (false, _) | (true, Ok("false")) => "",
+            (false, _) | (true, Ok("false")) => "--test-type=gpu",
             (_, Ok("new")) => "--headless=new",
             _ => "--headless",
         };
@@ -130,16 +130,16 @@ lazy_static::lazy_static! {
         let gpu_enabled = if gpu { "--enable-gpu" } else { "--disable-gpu" };
         let gpu_enabled_sandboxed = if gpu { "--enable-gpu-sandbox" } else { "--disable-gpu-sandbox" };
 
-        // let use_gl = match std::env::var("CHROME_GL") {
-        //     Ok(h) => {
-        //         if h == "angle" {
-        //             "--use-gl=angle"
-        //         } else {
-        //             "--use-gl=swiftshader"
-        //         }
-        //     }
-        //     _ => "--use-gl=angle"
-        // };
+        let use_gl = match std::env::var("CHROME_GL") {
+            Ok(h) => {
+                if h == "angle" {
+                    "--use-gl=angle"
+                } else {
+                    "--use-gl=swiftshader"
+                }
+            }
+            _ => "--use-gl=angle"
+        };
 
         [
             // *SPECIAL*
@@ -153,8 +153,7 @@ lazy_static::lazy_static! {
             "--enable-webgl2-compute-context",
             "--enable-webgl-draft-extensions",
             "--enable-unsafe-webgpu",
-            // use_gl,
-            // "--use-angle=swiftshader",
+            use_gl,
             "--no-first-run",
             "--no-sandbox",
             "--disable-setuid-sandbox",
@@ -172,12 +171,10 @@ lazy_static::lazy_static! {
             "--disable-dinosaur-easter-egg",
             "--disable-fetching-hints-at-navigation-start",
             "--disable-site-isolation-trials",
-            // "--disable-web-security",
             "--disable-threaded-animation",
             "--disable-sync",
             "--disable-print-preview",
             "--disable-search-engine-choice-screen",
-            // "--disable-partial-raster",
             "--disable-in-process-stack-traces",
             "--disable-low-res-tiling",
             "--disable-oobe-chromevox-hint-timer-for-testing",
@@ -243,11 +240,12 @@ lazy_static::lazy_static! {
             // --deterministic-mode 10-20% drop in perf
             // "--blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4",
             "--disable-features=PaintHolding,HttpsUpgrades,DeferRendererTasksAfterInput,LensOverlay,ThirdPartyStoragePartitioning,IsolateSandboxedIframes,ProcessPerSiteUpToMainFrameThreshold,site-per-process,WebUIJSErrorReportingExtended,DIPS,InterestFeedContentSuggestions,PrivacySandboxSettings4,AutofillServerCommunication,CalculateNativeWinOcclusion,OptimizationHints,AudioServiceOutOfProcess,IsolateOrigins,ImprovedCookieControls,LazyFrameLoading,GlobalMediaControls,DestroyProfileOnBrowserClose,MediaRouter,DialMediaRouteProvider,AcceptCHFrame,AutoExpandDetailsElement,CertificateTransparencyComponentUpdater,AvoidUnnecessaryBeforeUnloadCheckSync,Translate",
-            if !gpu {
-                "--enable-unsafe-swiftshader"
+            // put these args on the same command for now to prevent empty args cross-platform execution. The args will be one less on gpu enabled builds.
+            if gpu {
+                "--enable-unsafe-swiftshader --use-angle=swiftshader"
             } else {
                 ""
-            }
+            },
         ]
     };
 

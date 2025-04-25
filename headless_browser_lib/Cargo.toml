@@ -1,6 +1,6 @@
 [package]
 name = "headless_browser_lib"
-version = "0.1.15"
+version = "0.1.17"
 edition = "2021"
 authors = [
     "j-mendez <jeff@spider.cloud>"

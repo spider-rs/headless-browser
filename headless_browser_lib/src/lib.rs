@@ -134,13 +134,16 @@ pub fn fork(port: Option<u32>) -> String {
             command.args(&chrome_args)
         } else {
             let mut chrome_args = CHROME_ARGS.map(|e| e.to_string());
+
             if !CHROME_ADDRESS.is_empty() {
                 chrome_args[0] =
                     format!("--remote-debugging-address={}", &CHROME_ADDRESS.to_string());
             }
+
             if let Some(port) = port {
                 chrome_args[1] = format!("--remote-debugging-port={}", &port.to_string());
             }
+
             command.args(&chrome_args)
         };
 
