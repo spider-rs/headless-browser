@@ -2,11 +2,11 @@ use std::sync::atomic::{AtomicBool, AtomicU64};
 
 /// The performance arg count.
 #[cfg(not(feature = "physical_gpu"))]
-pub(crate) const PERF_ARGS: usize = 96;
+pub(crate) const PERF_ARGS: usize = 97;
 
 /// The performance arg count.
 #[cfg(feature = "physical_gpu")]
-pub(crate) const PERF_ARGS: usize = 94;
+pub(crate) const PERF_ARGS: usize = 95;
 
 lazy_static::lazy_static! {
     /// The chrome args to use test ( basic without anything used for testing ).
@@ -352,7 +352,6 @@ lazy_static::lazy_static! {
                 "--disable-libassistant-logfile",
                 "--ip-protection-proxy-opt-out",
                 "--unsafely-disable-devtools-self-xss-warning",
-                "--enable-features=Vulkan,PdfOopif,SharedArrayBuffer,NetworkService,NetworkServiceInProcess",
                 "--metrics-recording-only",
                 "--use-mock-keychain",
                 "--force-color-profile=srgb",
@@ -372,13 +371,15 @@ lazy_static::lazy_static! {
                 "--disable-oopr-debug-crash-dump",
                 "--disable-pnacl-crash-throttling",
                 "--disable-renderer-accessibility",
+                "--incognito",
                 &crate::render_conf::RENDER_PROCESS_LIMIT,
                 "--disable-pushstate-throttle",
                 "--disable-blink-features=AutomationControlled",
                 "--disable-ipc-flooding-protection", // we do not need to throttle navigation for https://github.com/spider-rs/spider/commit/9ff5bbd7a2656b8edb84b62843b72ae9d09af079#diff-75ce697faf0d37c3dff4a3a19e7524798b3cb5487f8f54beb5d04c4d48e34234R446.
                 // --deterministic-mode 10-20% drop in perf
                 // "--blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4",
-                "--disable-features=PaintHolding,HttpsUpgrades,DeferRendererTasksAfterInput,LensOverlay,ThirdPartyStoragePartitioning,IsolateSandboxedIframes,ProcessPerSiteUpToMainFrameThreshold,site-per-process,WebUIJSErrorReportingExtended,DIPS,InterestFeedContentSuggestions,PrivacySandboxSettings4,AutofillServerCommunication,CalculateNativeWinOcclusion,OptimizationHints,AudioServiceOutOfProcess,IsolateOrigins,ImprovedCookieControls,LazyFrameLoading,GlobalMediaControls,DestroyProfileOnBrowserClose,MediaRouter,DialMediaRouteProvider,AcceptCHFrame,AutoExpandDetailsElement,CertificateTransparencyComponentUpdater,AvoidUnnecessaryBeforeUnloadCheckSync,Translate",
+                "--enable-features=Vulkan,PdfOopif,SharedArrayBuffer,NetworkService,NetworkServiceInProcess,IsolateOrigins",
+                "--disable-features=PaintHolding,HttpsUpgrades,DeferRendererTasksAfterInput,LensOverlay,ThirdPartyStoragePartitioning,IsolateSandboxedIframes,ProcessPerSiteUpToMainFrameThreshold,WebUIJSErrorReportingExtended,DIPS,InterestFeedContentSuggestions,PrivacySandboxSettings4,AutofillServerCommunication,CalculateNativeWinOcclusion,OptimizationHints,AudioServiceOutOfProcess,ImprovedCookieControls,LazyFrameLoading,GlobalMediaControls,DestroyProfileOnBrowserClose,MediaRouter,DialMediaRouteProvider,AcceptCHFrame,AutoExpandDetailsElement,CertificateTransparencyComponentUpdater,AvoidUnnecessaryBeforeUnloadCheckSync,Translate",
                 // put these args on the same command for now to prevent empty args cross-platform execution. The args will be one less on gpu enabled builds.
                 "--enable-unsafe-swiftshader",
                 "--use-angle=swiftshader"
@@ -481,7 +482,6 @@ lazy_static::lazy_static! {
                 "--disable-libassistant-logfile",
                 "--ip-protection-proxy-opt-out",
                 "--unsafely-disable-devtools-self-xss-warning",
-                "--enable-features=Vulkan,PdfOopif,SharedArrayBuffer,NetworkService,NetworkServiceInProcess",
                 "--metrics-recording-only",
                 "--use-mock-keychain",
                 "--force-color-profile=srgb",
@@ -501,13 +501,15 @@ lazy_static::lazy_static! {
                 "--disable-oopr-debug-crash-dump",
                 "--disable-pnacl-crash-throttling",
                 "--disable-renderer-accessibility",
+                "--incognito",
                 &crate::render_conf::RENDER_PROCESS_LIMIT,
                 "--disable-pushstate-throttle",
                 "--disable-blink-features=AutomationControlled",
                 "--disable-ipc-flooding-protection", // we do not need to throttle navigation for https://github.com/spider-rs/spider/commit/9ff5bbd7a2656b8edb84b62843b72ae9d09af079#diff-75ce697faf0d37c3dff4a3a19e7524798b3cb5487f8f54beb5d04c4d48e34234R446.
                 // --deterministic-mode 10-20% drop in perf
                 // "--blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4",
-                "--disable-features=PaintHolding,HttpsUpgrades,DeferRendererTasksAfterInput,LensOverlay,ThirdPartyStoragePartitioning,IsolateSandboxedIframes,ProcessPerSiteUpToMainFrameThreshold,site-per-process,WebUIJSErrorReportingExtended,DIPS,InterestFeedContentSuggestions,PrivacySandboxSettings4,AutofillServerCommunication,CalculateNativeWinOcclusion,OptimizationHints,AudioServiceOutOfProcess,IsolateOrigins,ImprovedCookieControls,LazyFrameLoading,GlobalMediaControls,DestroyProfileOnBrowserClose,MediaRouter,DialMediaRouteProvider,AcceptCHFrame,AutoExpandDetailsElement,CertificateTransparencyComponentUpdater,AvoidUnnecessaryBeforeUnloadCheckSync,Translate",
+                "--enable-features=Vulkan,PdfOopif,SharedArrayBuffer,NetworkService,NetworkServiceInProcess,IsolateOrigins",
+                "--disable-features=PaintHolding,HttpsUpgrades,DeferRendererTasksAfterInput,LensOverlay,ThirdPartyStoragePartitioning,IsolateSandboxedIframes,ProcessPerSiteUpToMainFrameThreshold,WebUIJSErrorReportingExtended,DIPS,InterestFeedContentSuggestions,PrivacySandboxSettings4,AutofillServerCommunication,CalculateNativeWinOcclusion,OptimizationHints,AudioServiceOutOfProcess,ImprovedCookieControls,LazyFrameLoading,GlobalMediaControls,DestroyProfileOnBrowserClose,MediaRouter,DialMediaRouteProvider,AcceptCHFrame,AutoExpandDetailsElement,CertificateTransparencyComponentUpdater,AvoidUnnecessaryBeforeUnloadCheckSync,Translate",
             ]
         };
 }
