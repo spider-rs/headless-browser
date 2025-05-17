@@ -115,7 +115,7 @@ BRAVE_ENABLED=
 
 ## Library
 
-You can use the [lib](https://docs.rs/headless_browser_lib/latest/headless_browser_lib/) with `cargo add headless_browser_lib` control the startup and shutdown manually. Below is an example of using the [spider_chrome](https://github.com/spider-rs/headless-browser) project to run CDP commands concurrently fast.
+You can use the [lib](https://docs.rs/headless_browser_lib/latest/headless_browser_lib/) with `cargo add headless_browser_lib` control the startup and shutdown manually. Below is an example of using the [spider_chrome](https://github.com/spider-rs/spider/tree/main/spider_chrome) project to run CDP commands concurrently fast.
 
 ```rust
 futures-util = "0.3"
