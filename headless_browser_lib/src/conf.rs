@@ -2,11 +2,11 @@ use std::sync::atomic::{AtomicBool, AtomicU64};
 
 /// The performance arg count.
 #[cfg(not(feature = "physical_gpu"))]
-pub(crate) const PERF_ARGS: usize = 98;
+pub(crate) const PERF_ARGS: usize = 99;
 
 /// The performance arg count.
 #[cfg(feature = "physical_gpu")]
-pub(crate) const PERF_ARGS: usize = 96;
+pub(crate) const PERF_ARGS: usize = 97;
 
 lazy_static::lazy_static! {
     /// The chrome args to use test ( basic without anything used for testing ).
@@ -304,6 +304,7 @@ lazy_static::lazy_static! {
                 "--enable-distillability-service",
                 "--enable-surface-synchronization",
                 "--enable-logging=stderr",
+                "--enable-async-dns",
                 "--disable-setuid-sandbox",
                 "--disable-dev-shm-usage", // required or else container will crash not enough memory
                 "--disable-threaded-scrolling",
@@ -428,6 +429,7 @@ lazy_static::lazy_static! {
                 "--no-sandbox",
                 "--disable-setuid-sandbox",
                 "--no-zygote",
+                "--enable-async-dns",
                 "--hide-scrollbars",
                 "--user-data-dir=~/.config/google-chrome",
                 "--allow-running-insecure-content",

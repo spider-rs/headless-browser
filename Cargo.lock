@@ -203,9 +203,9 @@ dependencies = [
 
 [[package]]
 name = "cc"
-version = "1.2.22"
+version = "1.2.23"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "32db95edf998450acc7881c932f94cd9b05c87b4b2599e8bab064753da4acfd1"
+checksum = "5f4ac86a9e5bc1e2b3449ab9d7d3a6a405e3d1bb28d7b9be8614f55846ae3766"
 dependencies = [
  "shlex",
 ]
@@ -419,9 +419,9 @@ checksum = "877a4ace8713b0bcf2a4e7eec82529c029f1d0619886d18145fea96c3ffe5c0f"
 
 [[package]]
 name = "errno"
-version = "0.3.11"
+version = "0.3.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "976dd42dc7e85965fe702eb8164f21f450704bdde31faefd6471dba214cb594e"
+checksum = "cea14ef9355e3beab063703aa9dab15afd25f0667c341310c1e5274bb1d0da18"
 dependencies = [
  "libc",
  "windows-sys 0.59.0",
@@ -657,7 +657,7 @@ dependencies = [
 
 [[package]]
 name = "headless_browser"
-version = "0.1.22"
+version = "0.1.23"
 dependencies = [
  "futures-util",
  "headless_browser_lib",
@@ -670,7 +670,7 @@ dependencies = [
 
 [[package]]
 name = "headless_browser_lib"
-version = "0.1.22"
+version = "0.1.23"
 dependencies = [
  "cached",
  "dashmap",
@@ -840,7 +840,7 @@ dependencies = [
  "js-sys",
  "log",
  "wasm-bindgen",
- "windows-core 0.61.0",
+ "windows-core 0.61.1",
 ]
 
 [[package]]
@@ -1891,9 +1891,9 @@ dependencies = [
 
 [[package]]
 name = "spider_chrome"
-version = "2.37.41"
+version = "2.37.52"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9774a42af587275f28dbf41a2d68c06885f9972950ec2053cbca2f64ba573dad"
+checksum = "beae7cd75e9ce903c81d258dcf99ed2a25c69d5aefc9bf487b8543d32723573d"
 dependencies = [
  "aho-corasick",
  "base64",
@@ -1967,9 +1967,9 @@ dependencies = [
 
 [[package]]
 name = "spider_fingerprint"
-version = "2.37.41"
+version = "2.37.52"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "794f1362872a006ec6db604227d05e4a530a3c40113d473da7f98a3660beae83"
+checksum = "456733f705613350b19d38ff8b1b66851c6ece25207adaaeba719b66d0c61218"
 dependencies = [
  "case_insensitive_string",
  "lazy_static",
@@ -2611,15 +2611,15 @@ dependencies = [
 
 [[package]]
 name = "windows-core"
-version = "0.61.0"
+version = "0.61.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4763c1de310c86d75a878046489e2e5ba02c649d185f21c67d4cf8a56d098980"
+checksum = "46ec44dc15085cea82cf9c78f85a9114c463a369786585ad2882d1ff0b0acf40"
 dependencies = [
  "windows-implement 0.60.0",
  "windows-interface 0.59.1",
  "windows-link",
- "windows-result 0.3.2",
- "windows-strings 0.4.0",
+ "windows-result 0.3.3",
+ "windows-strings 0.4.1",
 ]
 
 [[package]]
@@ -2678,7 +2678,7 @@ version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4286ad90ddb45071efd1a66dfa43eb02dd0dfbae1545ad6cc3c51cf34d7e8ba3"
 dependencies = [
- "windows-result 0.3.2",
+ "windows-result 0.3.3",
  "windows-strings 0.3.1",
  "windows-targets 0.53.0",
 ]
@@ -2694,9 +2694,9 @@ dependencies = [
 
 [[package]]
 name = "windows-result"
-version = "0.3.2"
+version = "0.3.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c64fd11a4fd95df68efcfee5f44a294fe71b8bc6a91993e2791938abcc712252"
+checksum = "4b895b5356fc36103d0f64dd1e94dfa7ac5633f1c9dd6e80fe9ec4adef69e09d"
 dependencies = [
  "windows-link",
 ]
@@ -2712,9 +2712,9 @@ dependencies = [
 
 [[package]]
 name = "windows-strings"
-version = "0.4.0"
+version = "0.4.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7a2ba9642430ee452d5a7aa78d72907ebe8cfda358e8cb7918a2050581322f97"
+checksum = "2a7ab927b2637c19b3dbe0965e75d8f2d30bdd697a1516191cad2ec4df8fb28a"
 dependencies = [
  "windows-link",
 ]
