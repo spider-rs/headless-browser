@@ -279,7 +279,6 @@ lazy_static::lazy_static! {
                 _ => "--use-gl=swiftshader"
             };
 
-
             [
                 // *SPECIAL*
                 "--remote-debugging-address=0.0.0.0",

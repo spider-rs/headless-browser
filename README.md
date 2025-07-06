@@ -111,6 +111,8 @@ CHROME_PATH=
 REMOTE_ADDRESS=
 # use brave browser as default. Set the value to true.
 BRAVE_ENABLED=
+# custom chrome launch arguments
+CHROME_ARGS=
 ```
 
 ## Library

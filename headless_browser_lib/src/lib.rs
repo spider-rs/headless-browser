@@ -111,6 +111,43 @@ pub fn get_chrome_args_test() -> [&'static str; 6] {
     *crate::conf::CHROME_ARGS_TEST
 }
 
+/// Split a comma-separated string into args, preserving commas inside quotes.
+fn smart_split_args(arg_str: &str) -> Vec<String> {
+    let mut result = Vec::new();
+    let mut current = String::new();
+    let mut in_quotes = false;
+
+    for c in arg_str.chars() {
+        match c {
+            '"' => {
+                in_quotes = !in_quotes;
+                current.push(c);
+            }
+            ',' if !in_quotes => {
+                if !current.trim().is_empty() {
+                    result.push(current.trim().to_string());
+                }
+                current.clear();
+            }
+            _ => current.push(c),
+        }
+    }
+
+    if !current.trim().is_empty() {
+        result.push(current.trim().to_string());
+    }
+
+    result
+}
+
+/// Get the env arguments.
+fn get_env_args(env_key: &str) -> Vec<String> {
+    std::env::var(env_key)
+        .ok()
+        .map(|s| smart_split_args(&s))
+        .unwrap_or_default()
+}
+
 #[cfg(not(test))]
 /// Arguments to test headless without any extra args. Only applies during 'cargo test'.
 pub fn get_chrome_args_test() -> [&'static str; crate::conf::PERF_ARGS] {
@@ -119,6 +156,8 @@ pub fn get_chrome_args_test() -> [&'static str; crate::conf::PERF_ARGS] {
 
 /// Fork a chrome process.
 pub fn fork(port: Option<u32>) -> String {
+    let chrome_args = get_env_args("CHROME_ARGS");
+
     let id = if !*LIGHT_PANDA {
         let mut command = Command::new(&*CHROME_PATH);
 
@@ -147,6 +186,12 @@ pub fn fork(port: Option<u32>) -> String {
             command.args(&chrome_args)
         };
 
+        let cmd = if !chrome_args.is_empty() {
+            cmd.args(chrome_args)
+        } else {
+            cmd
+        };
+
         let id = match cmd.spawn() {
             Ok(child) => {
                 let cid = child.id();
@@ -166,12 +211,15 @@ pub fn fork(port: Option<u32>) -> String {
 
         let host = panda_args[0].replace("--host=", "");
         let port = panda_args[1].replace("--port=", "");
+        let cmd = command.args(["--port", &port, "--host", &host]);
 
-        let id = if let Ok(child) = command
-            .args(["--port", &port])
-            .args(["--host", &host])
-            .spawn()
-        {
+        let cmd = if !chrome_args.is_empty() {
+            cmd.args(chrome_args)
+        } else {
+            cmd
+        };
+
+        let id = if let Ok(child) = cmd.spawn() {
             let cid = child.id();
 
             tracing::info!("Chrome PID: {}", cid);
@@ -208,6 +256,7 @@ async fn version_handler_bytes_base(endpoint_path: Option<&str>) -> Option<Bytes
                 .map_or_else(|| "localhost".to_string(), |f| f.as_str().to_string()),
         )
         .header(hyper::header::CONTENT_TYPE, "application/json")
+        .header(hyper::header::CONNECTION, "keep-alive")
         .body(http_body_util::Empty::<Bytes>::new())
         .expect("Failed to build the request");
 
@@ -456,5 +505,55 @@ pub async fn run_main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> 
         _ = make_svc => Ok(()),
         _ = crate::proxy::proxy::run_proxy() =>  Ok(()),
         _ = signal::ctrl_c() => Ok(()),
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_chrome_args_parsing() {
+        let input =
+            r#"--headless,--disable-gpu,--disable-features="Feature1,Feature2",--no-sandbox"#;
+        let expected = vec![
+            "--headless",
+            "--disable-gpu",
+            r#"--disable-features="Feature1,Feature2""#,
+            "--no-sandbox",
+        ];
+
+        let result = smart_split_args(input);
+        assert_eq!(result, expected);
+    }
+
+    #[test]
+    fn test_chrome_args_with_extra_spaces() {
+        let input = r#" --foo , --bar="x, y" , --baz "#;
+        let expected = vec!["--foo", r#"--bar="x, y""#, "--baz"];
+
+        let result = smart_split_args(input);
+        assert_eq!(result, expected);
+    }
+
+    #[test]
+    fn test_empty_string() {
+        let input = "";
+        let result = smart_split_args(input);
+        assert_eq!(result, Vec::<String>::new());
+    }
+
+    #[test]
+    fn test_no_commas() {
+        let input = "--single-arg";
+        let result = smart_split_args(input);
+        assert_eq!(result, vec!["--single-arg"]);
+    }
+
+    #[test]
+    fn test_nested_quotes_not_supported() {
+        let input = r#"--arg="quoted \"inner\" text",--next"#;
+        let result = smart_split_args(input);
+        assert_eq!(result, vec![r#"--arg="quoted \"inner\" text""#, "--next"]);
     }
 }
