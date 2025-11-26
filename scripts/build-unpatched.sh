@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 LATEST_PATH="./out/latest/"
 
