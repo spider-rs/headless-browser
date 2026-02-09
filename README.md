@@ -127,7 +127,7 @@ headless_browser_lib = "0.1"
 ```
 
 ```rust
-/// spider_chrome is mapped to chromiumoxide since it was forked and kept the API the same.
+/// chromey is mapped to chromiumoxide since it was forked and kept the API the same.
 use chromiumoxide::{browser::Browser, error::CdpError};
 use futures_util::stream::StreamExt;
 
