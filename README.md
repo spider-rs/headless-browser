@@ -28,6 +28,8 @@ The default port configuration includes `9223` for Chrome and `9222` for the TCP
 
 For web scraping, we suggest using our [Headless Shell Dockerfile](./docker/Dockerfile.headless_shell_playwright) or downloading the [chrome-headless-shell](https://storage.googleapis.com/chrome-for-testing-public/134.0.6998.23/linux64/chrome-headless-shell-linux64.zip). The headless-shell offers significantly faster performance compared to the standard headless mode. Additionally, our Docker image is remarkably compact for the chrome-headless-shell, thanks to a multi-stage build process that installs only the essential components, resulting in a size of just 300 MB compared to Playwright's traditional 1.2 GB default.
 
+If you would rather not run Chrome yourself, the hosted [web scraper API](https://spider.cloud/web-scraper/?utm_source=github&utm_medium=readme&utm_campaign=headless-browser) runs the browsers for you.
+
 ---
 
 ## API
